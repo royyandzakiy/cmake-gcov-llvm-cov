@@ -1,15 +1,42 @@
+# GCov Code Coverage Report Generation
+
+This project runs coverage on a build, then generates html report
+
+## via CMakePresets
+### Code Coverage
+```bash
+# Configuration and compilation in build/coverage/
+cmake --preset coverage
+cmake --build --preset build-coverage
+
+# Run the binary from the specific coverage folder
+./build/coverage/coverage-example
+
+# Generate report (LCOV will look inside build/coverage/)
+cmake --build --preset report
+```
+
+### Normal Build
+```bash
+# Configuration and compilation in build/default/
+cmake --preset default
+cmake --build --preset build-default
+```
+
+## via CMake
 ```bash
 # 1. Configure and Build
 cmake -DENABLE_COVERAGE=true -B build
 cmake --build build
 
 # 2. RUN the program (This creates the .gcda files)
-./build/your_executable_name
+./build/coverage-example
 
 # 3. Now run the coverage target to collect that data
 cmake --build build --target coverage
 ```
 
+## via CMake (old)
 ```bash
 royya@tuff16:~/project-coding/cpp/202604/gcov-test-cmake$ mkdir build
 royya@tuff16:~/project-coding/cpp/202604/gcov-test-cmake$ cd build/

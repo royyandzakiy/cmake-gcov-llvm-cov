@@ -1,9 +1,13 @@
 cmake_minimum_required(VERSION 3.6)
 project(coverage-example)
 
+if (DEFINED WIN32)
+	message(FATAL_ERROR "only runs on linux!")
+endif()
+
 if(ENABLE_COVERAGE)
   # set compiler flags
-  set(CMAKE_CXX_FLAGS "-O0 -coverage")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -coverage")
 
   # find required tools
   find_program(LCOV lcov REQUIRED)
@@ -11,13 +15,14 @@ if(ENABLE_COVERAGE)
 
   # add coverage target
   add_custom_target(coverage
-    # gather data
-    COMMAND ${LCOV} --directory . --capture --output-file coverage.info
-    # generate report
-    COMMAND ${GENHTML} --demangle-cpp -o coverage coverage.info
-    DEPENDS ${PROJECT_NAME}
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+    # Gather data: Look for .gcda files specifically in the current binary directory
+    COMMAND ${LCOV} --directory ${CMAKE_BINARY_DIR} --capture --output-file coverage.info
+    # Clean up the output by removing system headers
+    COMMAND ${LCOV} --remove coverage.info '/usr/*' --output-file coverage.info --ignore-errors unused
+    # Generate report
+    COMMAND ${GENHTML} --demangle-cpp -o coverage_report coverage.info
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+  )
 endif()
 
-add_executable(${PROJECT_NAME} test.cpp)
-# add_executable(test test.cpp helper/util.cpp)
+add_executable(test test.cpp helper/util.cpp)

@@ -1,0 +1,50 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Unix Makefiles",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "default",
+      "displayName": "Normal Build",
+      "description": "Standard build without coverage",
+      "inherits": "base",
+      "binaryDir": "${sourceDir}/build/default",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "ENABLE_COVERAGE": "OFF"
+      }
+    },
+    {
+      "name": "coverage",
+      "displayName": "Coverage Build",
+      "description": "Instrumented build for coverage analysis",
+      "inherits": "base",
+      "binaryDir": "${sourceDir}/build/coverage",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "ENABLE_COVERAGE": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "build-default",
+      "configurePreset": "default"
+    },
+    {
+      "name": "build-coverage",
+      "configurePreset": "coverage"
+    },
+    {
+      "name": "report",
+      "configurePreset": "coverage",
+      "targets": ["coverage"]
+    }
+  ]
+}
