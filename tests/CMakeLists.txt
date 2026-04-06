@@ -7,3 +7,5 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 add_executable(${PROJECT_NAME}_test 
 	test.cpp 
 	../src/helper/util.cpp)
+
+generate_coverage_report(${PROJECT_NAME}_test)
