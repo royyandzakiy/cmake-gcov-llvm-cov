@@ -1,50 +1,70 @@
 {
-  "version": 3,
-  "configurePresets": [
-    {
-      "name": "base",
-      "hidden": true,
-      "generator": "Unix Makefiles",
-      "cacheVariables": {
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
-      }
-    },
-    {
-      "name": "default",
-      "displayName": "Normal Build",
-      "description": "Standard build without coverage",
-      "inherits": "base",
-      "binaryDir": "${sourceDir}/build/default",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "ENABLE_COVERAGE": "OFF"
-      }
-    },
-    {
-      "name": "coverage",
-      "displayName": "Coverage Build",
-      "description": "Instrumented build for coverage analysis",
-      "inherits": "base",
-      "binaryDir": "${sourceDir}/build/coverage",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "ENABLE_COVERAGE": "ON"
-      }
-    }
-  ],
-  "buildPresets": [
-    {
-      "name": "build-default",
-      "configurePreset": "default"
-    },
-    {
-      "name": "build-coverage",
-      "configurePreset": "coverage"
-    },
-    {
-      "name": "report",
-      "configurePreset": "coverage",
-      "targets": ["coverage"]
-    }
-  ]
+	"version": 3,
+	"configurePresets": [
+		{
+			"name": "base",
+			"hidden": true,
+			"generator": "Unix Makefiles",
+			"cacheVariables": {
+				"CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+			}
+		},
+		{
+			"name": "default",
+			"inherits": "base",
+			"binaryDir": "${sourceDir}/build/default",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release",
+				"ENABLE_COVERAGE": "OFF"
+			}
+		},
+		{
+			"name": "coverage-gcc",
+			"inherits": "base",
+			"binaryDir": "${sourceDir}/build/coverage-gcc",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug",
+				"ENABLE_COVERAGE": "ON"
+			}
+		},
+		{
+			"name": "coverage-clang",
+			"inherits": "base",
+			"binaryDir": "${sourceDir}/build/coverage-clang",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug",
+				"ENABLE_COVERAGE": "ON",
+				"CMAKE_CXX_COMPILER": "clang++",
+				"CMAKE_C_COMPILER": "clang"
+			}
+		}
+	],
+	"buildPresets": [
+		{
+			"name": "build-default",
+			"configurePreset": "default"
+		},
+		{
+			"name": "build-gcc",
+			"configurePreset": "coverage-gcc"
+		},
+		{
+			"name": "build-clang",
+			"configurePreset": "coverage-clang"
+		},
+		{
+			"name": "report-gcc",
+			"configurePreset": "coverage-gcc",
+			"targets": [
+				"coverage"
+			]
+		},
+		{
+			"name": "report-clang",
+			"configurePreset": "coverage-clang",
+			"targets": [
+				"coverage"
+			]
+		}
+	]
 }
