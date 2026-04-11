@@ -4,6 +4,8 @@
 
 This project runs coverage on a build, then generates html report
 
+**(Currently Linux Only)**
+
 ## via CMakePresets
 ### Code Coverage
 ```bash
