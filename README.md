@@ -1,6 +1,6 @@
 # GCov Code Coverage Report Generation
 
-[![codecov](https://codecov.io/gh/royyandzakiy/cmake-gcov-llvm-cov/branch/main/graph/badge.svg)](https://codecov.io/gh/royyandzakiy/cmake-gcov-llvm-cov)
+[![codecov](https://codecov.io/gh/royyandzakiy/cmake-gcov-llvm-cov/branch/master/graph/badge.svg)](https://codecov.io/gh/royyandzakiy/cmake-gcov-llvm-cov)
 
 This project runs coverage on a build, then generates html report
 
